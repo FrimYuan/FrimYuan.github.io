@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="屏幕适配方案">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一种不错的屏幕适配方案——SmallestWidth适配">
+<meta property="og:url" content="http://yoursite.com/2018/08/21/ResolutionAdaptation/index.html">
+<meta property="og:site_name" content="大锦鲤">
+<meta property="og:description" content="屏幕适配方案">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/images/icon_adaptation_01.png">
+<meta property="article:published_time" content="2018-08-21T15:14:07.000Z">
+<meta property="article:modified_time" content="2020-02-26T15:24:27.931Z">
+<meta property="article:author" content="大锦鲤">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/icon_adaptation_01.png">
+
+<link rel="canonical" href="http://yoursite.com/2018/08/21/ResolutionAdaptation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>一种不错的屏幕适配方案——SmallestWidth适配 | 大锦鲤</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大锦鲤</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">FrimYuan</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/FrimYuan" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/21/ResolutionAdaptation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="大锦鲤">
+      <meta itemprop="description" content="Android Developer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大锦鲤">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一种不错的屏幕适配方案——SmallestWidth适配
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-08-21 23:14:07" itemprop="dateCreated datePublished" datetime="2018-08-21T23:14:07+08:00">2018-08-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-26 23:24:27" itemprop="dateModified" datetime="2020-02-26T23:24:27+08:00">2020-02-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">屏幕适配方案</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在日常开发中我们免不了对App做屏幕适配，这篇文章简单总结一下屏幕适配。</p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>px （Pixel像素）：也称为图像元素，是作为图像构成的基本单元，单个像素的大小并不固定，跟随屏幕大小和像素数量的关系变化（屏幕越大，像素越低，单个像素越大，反之亦然）。所以在使用像素作为设计单位时，在不同的设备上可能会有缩放或拉伸的情况。</p>
+<p>resolution（分辨率）：是指屏幕的垂直和水平方向的像素数量，如果分辨率是 1920x1080 ，那就是垂直方向有 1920 个像素，水平方向有 1080 个像素。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DisplayMetrics dm = <span class="keyword">new</span> DisplayMetrics();</span><br><span class="line">getWindowManager().getDefaultDisplay().getMetrics(dm);</span><br><span class="line">dm.widthPixels;</span><br><span class="line">dm.heightPixels;</span><br></pre></td></tr></table></figure>
+
+<p>dpi（像素密度）：每英寸有多少个像素点，分为物理dpi（可以通过下面的公式计算得出）和系统dpi，这两个值不一定相同，系统dpi是由手机厂商设置的，并且可以在手机中修改。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DisplayMetrics dm = <span class="keyword">new</span> DisplayMetrics();</span><br><span class="line">getWindowManager().getDefaultDisplay().getMetrics(dm);</span><br><span class="line">dm.densityDpi;</span><br></pre></td></tr></table></figure>
+
+<p>density（密度）：Android中表示的是显示的逻辑密度</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DisplayMetrics dm = <span class="keyword">new</span> DisplayMetrics();</span><br><span class="line">getWindowManager().getDefaultDisplay().getMetrics(dm);</span><br><span class="line">dm.density;</span><br></pre></td></tr></table></figure>
+
+<p>dip / dp（设备独立像素）：也可以叫做dp，长度单位，同一个单位在不同的设备上有不同的显示效果，具体效果根据设备的密度有关，详细的公式请看下面 。</p>
+<p>sp：是Android推荐使用的字体大小单位，换算和dip相同，但是这里有个问题，sp受系统字体大小设置的影响，dip不会。什么意思呢，如果你在xml中设置TextView的textSize是20sp，显示的和效果图差不多，这时如果在手机系统设置应用中调整了字体大小，回到应用就会发现文字的大小就不是刚才设置的20sp了，会根据你在设置中的调整相应的放大或是缩小，所以如果你不想字体随着系统字体大小变化的话，那么设置字号时单位你也可以选择dip。</p>
+<h3 id="换算公式"><a href="#换算公式" class="headerlink" title="换算公式"></a>换算公式</h3><p>dpi=√(分辨率宽²+分辨率高²)/屏幕尺寸（例：分辨率为320x240，2.5英寸的屏幕，Dpi=√(320²+240²)/2.5=160）</p>
+<p>density = dpi / 160</p>
+<p>px = dp x density</p>
+<h3 id="Android-系统默认定义的-dpi"><a href="#Android-系统默认定义的-dpi" class="headerlink" title="Android 系统默认定义的 dpi"></a>Android 系统默认定义的 dpi</h3><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">ldpi</th>
+<th align="center">mdpi</th>
+<th align="center">hdpi</th>
+<th align="center">xhdpi</th>
+<th align="center">xxhdpi</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">分辨率</td>
+<td align="center">240x320</td>
+<td align="center">320x480</td>
+<td align="center">480x800</td>
+<td align="center">720x1280</td>
+<td align="center">1080x1920</td>
+</tr>
+<tr>
+<td align="center">dpi</td>
+<td align="center">120</td>
+<td align="center">160</td>
+<td align="center">240</td>
+<td align="center">320</td>
+<td align="center">480</td>
+</tr>
+<tr>
+<td align="center">density</td>
+<td align="center">0.75</td>
+<td align="center">1</td>
+<td align="center">1.5</td>
+<td align="center">2</td>
+<td align="center">3</td>
+</tr>
+</tbody></table>
+<h3 id="SmallestWidth适配"><a href="#SmallestWidth适配" class="headerlink" title="SmallestWidth适配"></a>SmallestWidth适配</h3><p>好了，基本概念和计算公式都介绍完了，接下来该讲如何适配了，这里我用的是SmallestWidth适配（sw），指的是Android会识别屏幕分辨率的最小尺寸的dp值，然后根据结果去资源文件中找到并使用对应限定符文件夹下的资源文件。主要思路一句话总结就是等比缩放分辨率后再根据换算将px换成dp。</p>
+<p>这个sw的计算公式为：sw = 分辨率最小尺寸 / density </p>
+<p>例如，我这个模拟器是1080x1920的分辨率，dpi是480，那么我们通过density的计算公式得出：density = 480 / 160 = 3，接下来我们再计算sw：sw = 1080 / 3 = 360dp，接下来我们在项目中创建限定符sw为360的文件夹</p>
+<p><img src="/images/icon_adaptation_01.png" alt="新建value示例"></p>
+<p>然后我们就可以新建dimens.xml将我们换算好的尺寸放入即可，假如美工给的效果图也是1080x1920，其中一个控件的宽是100px，那么我们就可以通过公式得出，dip = px / density ，上文中我们已经知道设备的density是3，所以这个100px的控件实际应该为 100px / 3 ≈ 33.3dip，所以我们就在dimens中写入如下dimen，并在实际布局中使用这个数值即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dimen name&#x3D;&quot;100px&quot;&gt;33.3dip&lt;&#x2F;dimen&gt;</span><br></pre></td></tr></table></figure>
+
+<p>我这个模拟器是480dpi的，但是还有其它分辨率为1080x1920的手机不一定是480dpi的，可能是320dpi或是更奇葩，比如490dpi，等等所以我们可能会得出很多sw，我们排列组合一下，就会发现有很多种情况：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">720x1080</th>
+<th align="center">752x1280</th>
+<th align="center">1080x1920</th>
+<th align="center">1536x2048</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center"><strong>720dp</strong></td>
+<td align="center"><strong>752dp</strong></td>
+<td align="center">1080dp</td>
+<td align="center">1536dp</td>
+</tr>
+<tr>
+<td align="center">1.5</td>
+<td align="center">480dp</td>
+<td align="center">533.3dp</td>
+<td align="center"><strong>720dp</strong></td>
+<td align="center">1024dp</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center"><strong>360dp</strong></td>
+<td align="center">376dp</td>
+<td align="center">540dp</td>
+<td align="center"><strong>768dp</strong></td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">240dp</td>
+<td align="center">266.6dp</td>
+<td align="center"><strong>360dp</strong></td>
+<td align="center">512dp</td>
+</tr>
+</tbody></table>
+<p>不过我们并不用担心，表中加粗的是我遇到过的情况，你也可以根据实际情况自己计算，另外如果你的sw文件夹并没有涵盖所有情况也没有关系，系统会自动寻找与它相近的dimens使用。另外这里也体现出出sw适配的好处，虽然手机有很多分辨率，但是这种适配根本不需要考虑，只需要把通用的sw计算出来即可。</p>
+<p>其实这块还有更简便的计算方法，例如上面的例子中设备的sw是360dp，表示手机最小宽度的dp值是360dp，接下在尺寸图给出的分辨率是1080x1920，我们就可以将360dp等分成1080份，表示为每个像素占360dp/1080px≈0.333dp，那么这时1080x1920的尺寸图中宽度为100px的控件在360dp下应为：100x0.333=33.3dip</p>
+<p>到这里你肯定会说道理我都懂，可是你总不会让我自己一个控件一个控件的去算吧，当然不用，我平常都是通过代码直接生成对应的dimens的文件的，具体代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 入口方法</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> deviceMinWidth 效果图最小边的数值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> sw             设备屏幕分辨率的最小尺寸的dp值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> count          需要生成dimen标签的数量</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">calculateDip</span><span class="params">(<span class="keyword">int</span> deviceMinWidth, <span class="keyword">int</span> sw, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">    List&lt;Dimen&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;(count);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= count; i++) &#123;</span><br><span class="line">        Dimen dimen = <span class="keyword">new</span> Dimen();</span><br><span class="line">        dimen.setKey(i + <span class="string">"px"</span>);</span><br><span class="line">        dimen.setValue(px2dip(i, sw, deviceMinWidth) + <span class="string">"dip"</span>);</span><br><span class="line">        list.add(dimen);</span><br><span class="line">    &#125;</span><br><span class="line">    createADXML(list, sw);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> pxValue     需要转化的px值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> sw          设备屏幕分辨率的最小尺寸的dp值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> designWidth 效果图最小边的数值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> dip</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">float</span> <span class="title">px2dip</span><span class="params">(<span class="keyword">float</span> pxValue, <span class="keyword">int</span> sw, <span class="keyword">int</span> designWidth)</span> </span>&#123;</span><br><span class="line">    BigDecimal bigDecimal = <span class="keyword">new</span> BigDecimal((sw * pxValue) / designWidth);</span><br><span class="line">    <span class="keyword">return</span> bigDecimal.setScale(<span class="number">1</span>, BigDecimal.ROUND_HALF_UP).floatValue();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将文件保存到本地</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> data 结果集合</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> sw   sw名</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">createADXML</span><span class="params">(List&lt;Dimen&gt; data, <span class="keyword">float</span> sw)</span> </span>&#123;</span><br><span class="line">    FileOutputStream filers;</span><br><span class="line">    File newXmlFile = <span class="keyword">new</span> File(Environment.getExternalStorageDirectory().getPath() + <span class="string">"/"</span> + sw + <span class="string">"_dimens.xml"</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (newXmlFile.exists()) &#123;</span><br><span class="line">            newXmlFile.delete();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (newXmlFile.createNewFile()) &#123;</span><br><span class="line">            filers = <span class="keyword">new</span> FileOutputStream(newXmlFile);</span><br><span class="line">            StringWriter writer = <span class="keyword">new</span> StringWriter();</span><br><span class="line">            XmlSerializer serializer = Xml.newSerializer();</span><br><span class="line">            serializer.setOutput(writer);</span><br><span class="line">            serializer.setOutput(filers, <span class="string">"UTF-8"</span>);</span><br><span class="line">            serializer.startTag(<span class="keyword">null</span>, <span class="string">"resources"</span>);</span><br><span class="line">            <span class="keyword">for</span> (Dimen dimen : data) &#123;</span><br><span class="line">                serializer.startTag(<span class="keyword">null</span>, <span class="string">"dimen"</span>);</span><br><span class="line">                serializer.attribute(<span class="keyword">null</span>, <span class="string">"name"</span>, dimen.getKey());</span><br><span class="line">                serializer.text(dimen.getValue());</span><br><span class="line">                serializer.endTag(<span class="keyword">null</span>, <span class="string">"dimen"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            serializer.endTag(<span class="keyword">null</span>, <span class="string">"resources"</span>);</span><br><span class="line">            serializer.endDocument();</span><br><span class="line">            serializer.flush();</span><br><span class="line">            filers.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dimen</span> </span>&#123;</span><br><span class="line">    String key;</span><br><span class="line">    String value;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> key;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setKey</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.key = key;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(String value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参看链接：<a href="https://www.jianshu.com/p/a4b8e4c5d9b0" target="_blank" rel="noopener">Android 目前最稳定和高效的UI适配方案</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/07/05/KnowledgeNote/" rel="prev" title="知识笔记">
+      <i class="fa fa-chevron-left"></i> 知识笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/08/23/SingleInstance/" rel="next" title="单例类的五种常用写法">
+      单例类的五种常用写法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#换算公式"><span class="nav-number">3.</span> <span class="nav-text">换算公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-系统默认定义的-dpi"><span class="nav-number">4.</span> <span class="nav-text">Android 系统默认定义的 dpi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SmallestWidth适配"><span class="nav-number">5.</span> <span class="nav-text">SmallestWidth适配</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">大锦鲤</p>
+  <div class="site-description" itemprop="description">Android Developer</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">大锦鲤</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
